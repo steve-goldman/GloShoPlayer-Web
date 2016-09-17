@@ -1,2 +1,18 @@
+.info#connecting< Connecting
+.info#unable-to-connect< Unable to connect
+.info#disconnected< Disconnected
+.info#logging-in< Logging in
+.info#waiting-to-start< Waiting to start
+.info#starting-in< Starting in 10 seconds
+.info#running< Running
+.info#done< Done
+.info#found< Found!
+.info#not-found< Not found
+.fullscreen#torch-on
+.fullscreen#torch-off
+.action#connect= button_tag "Connect"
+.action#disconnect= button_tag "Disconnect"
+.action#locate-me= button_tag "Locate Me"
+
 :javascript
-  new Player();
+  new PlayerBuilder().build().run();
