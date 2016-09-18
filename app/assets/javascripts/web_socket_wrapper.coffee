@@ -35,12 +35,12 @@ class @WebSocketWrapper
     switch message.messageType
       when 'ping'              then this._ping()
       when 'player-logged-in'  then this._playerLoggedIn()
-      when 'starting-in'       then this._startingIn message
+      when 'starting-in'       then this._startingIn(message)
       when 'running'           then this._running()
       when 'set-torch-on'      then this._setTorchOn()
       when 'set-torch-off'     then this._setTorchOff()
       when 'done'              then this._done()
-      when 'play-torch-series' then this._playTorchSeries message
+      when 'play-torch-series' then this._playTorchSeries(message)
       when 'can-be-located'    then this._canBeLocated()
       when 'cannot-be-located' then this._cannotBeLocated()
       when 'found'             then this._found()
