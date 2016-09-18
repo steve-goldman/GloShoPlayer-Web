@@ -42,6 +42,7 @@ class @Player
   done: =>
     @torchNotesPlayerStarter.close()
     @viewManager.setViewState ViewManager.DONE
+    @webSocketWrapper.sendTorchSeriesPlayed()
 
   playTorchSeries: (torchNotes, localStartTime) =>
     torchNotesPlayer = @torchNotesPlayerBuilder.build torchNotes

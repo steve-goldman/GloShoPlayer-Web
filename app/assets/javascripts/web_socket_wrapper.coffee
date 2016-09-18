@@ -26,6 +26,9 @@ class @WebSocketWrapper
   sendTorchStateSet: =>
     new Message('torch-state-set').send(@webSocket)
   
+  sendTorchSeriesPlayed: =>
+    new Message('torch-series-played').send(@webSocket)
+
   _onOpen: =>
     this._login()
 
