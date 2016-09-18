@@ -15,4 +15,5 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require socket.io
+//= require nosleep
 //= require_tree .

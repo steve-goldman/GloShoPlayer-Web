@@ -1,9 +1,10 @@
 class @Player
-  constructor: (viewManager, webSocketWrapper, torchNotesPlayerBuilder, torchNotesPlayerStarter) ->
+  constructor: (viewManager, webSocketWrapper, torchNotesPlayerBuilder, torchNotesPlayerStarter, noSleep) ->
     @viewManager             = viewManager
     @webSocketWrapper        = webSocketWrapper
     @torchNotesPlayerBuilder = torchNotesPlayerBuilder
     @torchNotesPlayerStarter = torchNotesPlayerStarter
+    @noSleep                 = noSleep
     @viewManager.setViewState ViewManager.NOT_CONNECTED
 
   #
@@ -12,12 +13,14 @@ class @Player
 
   disconnected: =>
     @viewManager.setViewState ViewManager.DISCONNECTED
+    @noSleep.disable()
 
   unableToConnect: =>
     @viewManager.setViewState ViewManager.UNABLE_TO_CONNECT
 
   playerLoggedIn: =>
     @viewManager.setViewState ViewManager.WAITING_TO_START
+    @noSleep.enable()
 
   startingIn: (seconds) =>
     @viewManager.setStartingIn seconds

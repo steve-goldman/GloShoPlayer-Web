@@ -4,8 +4,9 @@ class @PlayerBuilder
     webSocketWrapper        = new WebSocketWrapperBuilder().build(serverUrl)
     torchNotesPlayerBuilder = new TorchNotesPlayerBuilder(doneDelay)
     torchNotesPlayerStarter = new TorchNotesPlayerStarter()
+    noSleep                 = new NoSleep()
 
-    player = new Player viewManager, webSocketWrapper, torchNotesPlayerBuilder, torchNotesPlayerStarter
+    player = new Player viewManager, webSocketWrapper, torchNotesPlayerBuilder, torchNotesPlayerStarter, noSleep
 
     webSocketWrapper.setListener        player
     torchNotesPlayerBuilder.setListener player
