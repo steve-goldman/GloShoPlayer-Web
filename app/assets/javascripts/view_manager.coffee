@@ -68,5 +68,5 @@ class @ViewManager
     @stateViews[ViewManager.DONE             ] = [ @done, @disconnect ]
     @stateViews[ViewManager.READY_TO_LOCATE  ] = [ @locateMe, @disconnect ]
     @stateViews[ViewManager.FOUND            ] = [ @found, @disconnect ]
-    @stateViews[ViewManager.NOT_FOUND        ] = [ @notFound, @disconnect ]
+    @stateViews[ViewManager.NOT_FOUND        ] = [ @notFound, @locateMe, @disconnect ]
     @stateViews[ViewManager.NOT_CONNECTED    ] = [ @connect ]
