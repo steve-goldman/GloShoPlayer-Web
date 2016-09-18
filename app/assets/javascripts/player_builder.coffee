@@ -1,11 +1,14 @@
 class @PlayerBuilder
-  build: (serverUrl) =>
-    viewManager      = new ViewManager()
-    webSocketWrapper = new WebSocketWrapperBuilder().build(serverUrl)
+  build: (serverUrl, doneDelay) =>
+    viewManager             = new ViewManager()
+    webSocketWrapper        = new WebSocketWrapperBuilder().build(serverUrl)
+    torchNotesPlayerBuilder = new TorchNotesPlayerBuilder(doneDelay)
+    torchNotesPlayerStarter = new TorchNotesPlayerStarter()
 
-    player = new Player viewManager, webSocketWrapper
+    player = new Player viewManager, webSocketWrapper, torchNotesPlayerBuilder, torchNotesPlayerStarter
 
-    webSocketWrapper.setListener player
-    new ClickListener().setListener player
+    webSocketWrapper.setListener        player
+    torchNotesPlayerBuilder.setListener player
+    new ClickListener().setListener     player
 
     return player

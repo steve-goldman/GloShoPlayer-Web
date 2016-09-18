@@ -72,16 +72,16 @@ class @WebSocketWrapper
     @listener.running()
 
   _setTorchOn: =>
-    @listener.setTorchOn()
+    @listener.setTorchOnAndAck()
 
   _setTorchOff: =>
-    @listener.setTorchOff()
+    @listener.setTorchOffAndAck()
 
   _done: =>
     @listener.done()
 
   _playTorchSeries: (message) =>
-    # TODO
+    @listener.playTorchSeries message.torchNotes, message.localStartTime || 0
 
   _canBeLocated: =>
     @listener.canBeLocated()

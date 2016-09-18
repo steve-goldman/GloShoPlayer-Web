@@ -1,7 +1,9 @@
 class @Player
-  constructor: (viewManager, webSocketWrapper) ->
-    @viewManager      = viewManager
-    @webSocketWrapper = webSocketWrapper
+  constructor: (viewManager, webSocketWrapper, torchNotesPlayerBuilder, torchNotesPlayerStarter) ->
+    @viewManager             = viewManager
+    @webSocketWrapper        = webSocketWrapper
+    @torchNotesPlayerBuilder = torchNotesPlayerBuilder
+    @torchNotesPlayerStarter = torchNotesPlayerStarter
     @viewManager.setViewState ViewManager.NOT_CONNECTED
 
   #
@@ -25,17 +27,25 @@ class @Player
 
   setTorchOn: =>
     @viewManager.setViewState ViewManager.TORCH_ON
+
+  setTorchOnAndAck: =>
+    this.setTorchOn()
     @webSocketWrapper.sendTorchStateSet()
 
   setTorchOff: =>
     @viewManager.setViewState ViewManager.TORCH_OFF
+
+  setTorchOffAndAck: =>
+    this.setTorchOff()
     @webSocketWrapper.sendTorchStateSet()
 
   done: =>
+    @torchNotesPlayerStarter.close()
     @viewManager.setViewState ViewManager.DONE
 
-  playTorchSeries: (message) =>
-    # TODO
+  playTorchSeries: (torchNotes, localStartTime) =>
+    torchNotesPlayer = @torchNotesPlayerBuilder.build torchNotes
+    @torchNotesPlayerStarter.update localStartTime, torchNotesPlayer
 
   canBeLocated: =>
     @viewManager.setViewState ViewManager.READY_TO_LOCATE
