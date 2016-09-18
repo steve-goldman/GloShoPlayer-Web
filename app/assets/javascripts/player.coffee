@@ -18,7 +18,7 @@ class @Player
     @viewManager.setViewState ViewManager.WAITING_TO_START
 
   startingIn: (seconds) =>
-    # TODO
+    @viewManager.setStartingIn seconds
 
   running: =>
     @viewManager.setViewState ViewManager.TORCH_OFF

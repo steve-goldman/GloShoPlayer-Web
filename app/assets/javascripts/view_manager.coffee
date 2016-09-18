@@ -26,6 +26,10 @@ class @ViewManager
     for element in @stateViews[state]
       element.show()
 
+  setStartingIn: (seconds) =>
+    this.setViewState ViewManager.STARTING_IN
+    @startingIn.html('Starting in ' + seconds + " seconds")
+
   _getElement: (jqueryId) =>
     element = $(jqueryId)
     @elements.push element
