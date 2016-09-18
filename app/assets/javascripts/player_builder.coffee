@@ -1,4 +1,11 @@
 class @PlayerBuilder
-  build: =>
-    viewManager = new ViewManager();
-    return new Player viewManager;
+  build: (serverUrl) =>
+    viewManager      = new ViewManager()
+    webSocketWrapper = new WebSocketWrapperBuilder().build(serverUrl)
+
+    player = new Player viewManager, webSocketWrapper
+
+    webSocketWrapper.setListener player
+    new ClickListener().setListener player
+
+    return player
