@@ -1,0 +1,49 @@
+body {
+  background: black;
+  color: lightgrey;
+  font-size: 64px;
+}
+
+.fullscreen {
+  position:   fixed;
+  top:        0;
+  left:       0;
+  bottom:     0;
+  right:      0;
+  overflow:   auto;
+}
+
+#torch-on {
+  background: white;
+}
+
+#torch-off {
+  background: black;
+}
+
+.lower {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%)
+}
+
+.middle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%)
+}
+
+.upper {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%)
+}
+
+.btn-xl {
+  padding: 40px 64px;
+  font-size: 72px;
+  border-radius: 16px;
+}
