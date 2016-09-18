@@ -65,7 +65,7 @@ class @ViewManager
     @stateViews[ViewManager.STARTING_IN      ] = [ @startingIn, @disconnect ]
     @stateViews[ViewManager.TORCH_OFF        ] = [ @torchOff ]
     @stateViews[ViewManager.TORCH_ON         ] = [ @torchOn ]
-    @stateViews[ViewManager.DONE             ] = [ @done, @connect ]
+    @stateViews[ViewManager.DONE             ] = [ @done, @disconnect ]
     @stateViews[ViewManager.READY_TO_LOCATE  ] = [ @locateMe, @disconnect ]
     @stateViews[ViewManager.FOUND            ] = [ @found, @disconnect ]
     @stateViews[ViewManager.NOT_FOUND        ] = [ @notFound, @disconnect ]
