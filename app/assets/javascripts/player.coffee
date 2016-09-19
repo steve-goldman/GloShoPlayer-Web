@@ -1,10 +1,11 @@
 class @Player
-  constructor: (viewManager, webSocketWrapper, torchNotesPlayerBuilder, torchNotesPlayerStarter, noSleep) ->
+  constructor: (viewManager, webSocketWrapper, torchNotesPlayerBuilder, torchNotesPlayerStarter, noSleep, locateMeCountdown) ->
     @viewManager             = viewManager
     @webSocketWrapper        = webSocketWrapper
     @torchNotesPlayerBuilder = torchNotesPlayerBuilder
     @torchNotesPlayerStarter = torchNotesPlayerStarter
     @noSleep                 = noSleep
+    @locateMeCountdown       = locateMeCountdown
     @viewManager.setViewState ViewManager.NOT_CONNECTED
 
   #
@@ -14,6 +15,7 @@ class @Player
   disconnected: =>
     @viewManager.setViewState ViewManager.DISCONNECTED
     @noSleep.disable()
+    @locateMeCountdown.stop()
 
   unableToConnect: =>
     @viewManager.setViewState ViewManager.UNABLE_TO_CONNECT
@@ -75,5 +77,14 @@ class @Player
     @webSocketWrapper.close()
 
   locateMe: =>
-    # TODO: user needs time to turn phone around
-    @webSocketWrapper.sendLocateMe()
+    @locateMeCountdown.start()
+
+  #
+  # calls from the LocateMeCountdown
+  #
+
+  locatingIn: (seconds) =>
+    if seconds == 0
+      @webSocketWrapper.sendLocateMe()
+    else
+      this.startingIn seconds
