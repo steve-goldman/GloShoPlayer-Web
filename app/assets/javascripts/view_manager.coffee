@@ -28,7 +28,7 @@ class @ViewManager
 
   setStartingIn: (seconds) =>
     this.setViewState ViewManager.STARTING_IN
-    @startingIn.html('Starting in ' + seconds + " seconds")
+    @startingIn.html seconds
 
   _getElement: (jqueryId) =>
     element = $(jqueryId)
@@ -50,6 +50,7 @@ class @ViewManager
     @done            = this._getElement '.info#done'
     @found           = this._getElement '.info#found'
     @notFound        = this._getElement '.info#not-found'
+    @turnPhoneAround = this._getElement '.info#turn-phone-around'
     @torchOn         = this._getElement '.fullscreen#torch-on'
     @torchOff        = this._getElement '.fullscreen#torch-off'
     @connect         = this._getElement '.action#connect'
@@ -62,7 +63,7 @@ class @ViewManager
     @stateViews[ViewManager.DISCONNECTED     ] = [ @disconnected, @connect ]
     @stateViews[ViewManager.LOGGING_IN       ] = [ @loggingIn, @disconnect ]
     @stateViews[ViewManager.WAITING_TO_START ] = [ @waitingToStart, @disconnect ]
-    @stateViews[ViewManager.STARTING_IN      ] = [ @startingIn, @disconnect ]
+    @stateViews[ViewManager.STARTING_IN      ] = [ @startingIn, @turnPhoneAround, @disconnect ]
     @stateViews[ViewManager.TORCH_OFF        ] = [ @torchOff ]
     @stateViews[ViewManager.TORCH_ON         ] = [ @torchOn ]
     @stateViews[ViewManager.DONE             ] = [ @done, @disconnect ]
