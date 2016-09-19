@@ -1,11 +1,12 @@
 class @Player
-  constructor: (viewManager, webSocketWrapper, torchNotesPlayerBuilder, torchNotesPlayerStarter, noSleep, locateMeCountdown) ->
+  constructor: (viewManager, webSocketWrapper, torchNotesPlayerBuilder, torchNotesPlayerStarter, noSleep, locateMeCountdown, donePlayingNotifier) ->
     @viewManager             = viewManager
     @webSocketWrapper        = webSocketWrapper
     @torchNotesPlayerBuilder = torchNotesPlayerBuilder
     @torchNotesPlayerStarter = torchNotesPlayerStarter
     @noSleep                 = noSleep
     @locateMeCountdown       = locateMeCountdown
+    @donePlayingNotifier     = donePlayingNotifier
     @viewManager.setViewState ViewManager.NOT_CONNECTED
 
   #
@@ -48,6 +49,7 @@ class @Player
     @torchNotesPlayerStarter.close()
     @viewManager.setViewState ViewManager.DONE
     @webSocketWrapper.sendTorchSeriesPlayed()
+    @donePlayingNotifier.notify()
 
   playTorchSeries: (torchNotes, localStartTime) =>
     torchNotesPlayer = @torchNotesPlayerBuilder.build torchNotes
@@ -70,8 +72,8 @@ class @Player
   #
 
   connect: =>
-    console.log 'player connect'
     @webSocketWrapper.open()
+    @donePlayingNotifier.init()
 
   disconnect: =>
     @webSocketWrapper.close()

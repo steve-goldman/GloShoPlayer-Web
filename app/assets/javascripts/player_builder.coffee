@@ -6,8 +6,9 @@ class @PlayerBuilder
     torchNotesPlayerStarter = new TorchNotesPlayerStarter()
     noSleep                 = new NoSleep()
     locateMeCountdown       = new LocateMeCountdown(locateMeSeconds)
+    donePlayingNotifier     = new DonePlayingNotifier()
 
-    player = new Player viewManager, webSocketWrapper, torchNotesPlayerBuilder, torchNotesPlayerStarter, noSleep, locateMeCountdown
+    player = new Player viewManager, webSocketWrapper, torchNotesPlayerBuilder, torchNotesPlayerStarter, noSleep, locateMeCountdown, donePlayingNotifier
 
     webSocketWrapper.setListener        player
     torchNotesPlayerBuilder.setListener player
