@@ -7,7 +7,7 @@ class @TorchNotesPlayerStarter
     if localStartTime == 0
       torchNotesPlayer.start()
     else
-      delay  = localStartTime - (new Date().getTime())
+      delay  = localStartTime - Math.round(performance.now())
       @timer = setTimeout torchNotesPlayer.start, delay
 
   close: =>
