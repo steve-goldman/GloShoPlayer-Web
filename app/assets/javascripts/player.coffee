@@ -20,10 +20,10 @@ class @Player
 
   unableToConnect: =>
     @viewManager.setViewState ViewManager.UNABLE_TO_CONNECT
+    @noSleep.disable()
 
   playerLoggedIn: =>
     @viewManager.setViewState ViewManager.WAITING_TO_START
-    @noSleep.enable()
 
   startingIn: (seconds) =>
     @viewManager.setStartingIn seconds
@@ -74,6 +74,7 @@ class @Player
   connect: =>
     @webSocketWrapper.open()
     @donePlayingNotifier.init()
+    @noSleep.enable()
 
   disconnect: =>
     @webSocketWrapper.close()
