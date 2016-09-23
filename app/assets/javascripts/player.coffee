@@ -21,11 +21,11 @@ class @Player
     @viewManager.setViewState ViewManager.NO_SHOW
     @noSleep.disable()
     @locateMeCountdown.stop()
-    setTimeout this.open, @loginInterval
+    this._retryLogin()
 
   unableToConnect: =>
     @viewManager.setViewState ViewManager.NO_SHOW
-    setTimeout this.open, @loginInterval
+    this._retryLogin()
 
   playerLoggedIn: =>
     @viewManager.setViewState ViewManager.WAITING_TO_START
@@ -78,6 +78,11 @@ class @Player
     else
       @showId = showId
       @viewManager.setViewState ViewManager.JOINABLE
+
+  playerLoginError: =>
+    @viewManager.setViewState ViewManager.NO_SHOW
+    this._retryLogin()
+
   #
   # calls from button clicks
   #
@@ -105,3 +110,10 @@ class @Player
       @webSocketWrapper.sendLocateMe()
     else
       this.startingIn seconds
+
+  #
+  # helpers
+  #
+
+  _retryLogin: =>
+    setTimeout this.open, @loginInterval
