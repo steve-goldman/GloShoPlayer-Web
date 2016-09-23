@@ -5,7 +5,7 @@ development:
   login_interval:    5000
 
 production:
-  server_url: ws://glosho.herokuapp.com
+  server_url:        wss://glosho-server.herokuapp.com
   done_delay:        500
   locate_me_seconds: 5
   login_interval:    5000
