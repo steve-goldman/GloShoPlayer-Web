@@ -25,10 +25,12 @@ class @Player
 
   unableToConnect: =>
     @viewManager.setViewState ViewManager.NO_SHOW
+    @noSleep.disable()
     this._retryLogin()
 
   playerLoggedIn: =>
     @viewManager.setViewState ViewManager.WAITING_TO_START
+    @noSleep.enable()
 
   startingIn: (seconds) =>
     @viewManager.setStartingIn seconds
