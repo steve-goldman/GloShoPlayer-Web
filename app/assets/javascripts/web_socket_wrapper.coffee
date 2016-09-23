@@ -16,6 +16,9 @@ class @WebSocketWrapper
     @webSocket.onclose   = this._onClose
     @webSocket.onerror   = this._onError
 
+  login: =>
+    this._login()
+
   close: =>
     console.log 'closing connection'
     @webSocket.close()
@@ -30,7 +33,7 @@ class @WebSocketWrapper
     new Message('torch-series-played').send(@webSocket)
 
   _onOpen: =>
-    this._login()
+    this._getShowInfo()
 
   _onMessage: (event) =>
     console.log 'rx', event
@@ -48,6 +51,7 @@ class @WebSocketWrapper
       when 'cannot-be-located' then this._cannotBeLocated()
       when 'found'             then this._found()
       when 'not-found'         then this._notFound()
+      when 'show-info'         then this._showInfo(message)
   
   _onClose: =>
     if @hasConnected
@@ -60,6 +64,9 @@ class @WebSocketWrapper
 
   _login: =>
     new LoginMessage(@playerId).generate().send(@webSocket)
+
+  _getShowInfo: =>
+    new Message('get-show-info').send(@webSocket)
 
   _ping: =>
     new Message('pong').send(@webSocket)
@@ -97,3 +104,6 @@ class @WebSocketWrapper
 
   _notFound: =>
     @listener.notFound()
+
+  _showInfo: (message) =>
+    @listener.showInfo message.showId

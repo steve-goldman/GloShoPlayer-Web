@@ -1,5 +1,5 @@
 class @Player
-  constructor: (viewManager, webSocketWrapper, torchNotesPlayerBuilder, torchNotesPlayerStarter, noSleep, locateMeCountdown, donePlayingNotifier) ->
+  constructor: (viewManager, webSocketWrapper, torchNotesPlayerBuilder, torchNotesPlayerStarter, noSleep, locateMeCountdown, donePlayingNotifier, loginInterval) ->
     @viewManager             = viewManager
     @webSocketWrapper        = webSocketWrapper
     @torchNotesPlayerBuilder = torchNotesPlayerBuilder
@@ -7,20 +7,25 @@ class @Player
     @noSleep                 = noSleep
     @locateMeCountdown       = locateMeCountdown
     @donePlayingNotifier     = donePlayingNotifier
-    @viewManager.setViewState ViewManager.NOT_CONNECTED
+    @loginInterval           = loginInterval
+    @viewManager.setViewState ViewManager.EMPTY
+
+  open: =>
+    @webSocketWrapper.open()
 
   #
   # calls from web socket wrapper
   #
 
   disconnected: =>
-    @viewManager.setViewState ViewManager.DISCONNECTED
+    @viewManager.setViewState ViewManager.NO_SHOW
     @noSleep.disable()
     @locateMeCountdown.stop()
+    setTimeout this.open, @loginInterval
 
   unableToConnect: =>
-    @viewManager.setViewState ViewManager.UNABLE_TO_CONNECT
-    @noSleep.disable()
+    @viewManager.setViewState ViewManager.NO_SHOW
+    setTimeout this.open, @loginInterval
 
   playerLoggedIn: =>
     @viewManager.setViewState ViewManager.WAITING_TO_START
@@ -67,17 +72,26 @@ class @Player
   notFound: =>
     @viewManager.setViewState ViewManager.NOT_FOUND
 
+  showInfo: (showId) =>
+    if showId.localeCompare(Cookies.get('current_show_id')) == 0
+      @webSocketWrapper.login()
+    else
+      @showId = showId
+      @viewManager.setViewState ViewManager.JOINABLE
   #
   # calls from button clicks
   #
 
-  connect: =>
-    @webSocketWrapper.open()
+  join: =>
+    Cookies.set 'current_show_id', @showId
+    @webSocketWrapper.login()
     @donePlayingNotifier.init()
     @noSleep.enable()
 
-  disconnect: =>
+  leave: =>
     @webSocketWrapper.close()
+    Cookies.remove 'current_show_id'
+    this.open()
 
   locateMe: =>
     @locateMeCountdown.start()
