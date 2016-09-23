@@ -16,4 +16,5 @@
 //= require bootstrap-sprockets
 //= require socket.io
 //= require nosleep
+//= require js.cookie
 //= require_tree .

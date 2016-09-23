@@ -1,6 +1,6 @@
 class @ClickListener
   setListener: (listener) =>
     @listener = listener
-    $('.action#connect').click    => @listener.connect()
-    $('.action#disconnect').click => @listener.disconnect()
-    $('.action#locate-me').click  => @listener.locateMe()
+    $('.action#join').click      => @listener.join()
+    $('.action#leave').click     => @listener.leave()
+    $('.action#locate-me').click => @listener.locateMe()

@@ -1,18 +1,14 @@
 .lower
-  .info#connecting< Connecting
-  .info#unable-to-connect< Unable to connect
-  .info#disconnected< Disconnected
-  .info#logging-in< Logging in
+  .info#no-show< Please wait for the show
   .info#waiting-to-start< Waiting to start
   .info#starting-in< Starting in 10 seconds
-  .info#running< Running
   .info#done< Done
   .info#found< Found!
   .info#not-found< Not found
 
 .upper
-  = button_tag "Connect", class: "btn btn-primary btn-xl action", id: "connect"
-  = button_tag "Disconnect", class: "btn btn-danger btn-xl action", id: "disconnect"
+  = button_tag "Join Show",  class: "btn btn-primary btn-xl action", id: "join"
+  = button_tag "Leave Show", class: "btn btn-danger btn-xl action",  id: "leave"
 
 .middle
   .info#turn-phone-around< Turn your screen to face the conductor and hold still!
@@ -24,4 +20,4 @@
 = audio_tag "beep.wav", "beep.mp3", autoplay: false, controls: false, class: :audio, id: :beep
 
 :javascript
-  new PlayerBuilder().build("ws://192.168.0.10:8080", 500, 5);
+  new PlayerBuilder().build("#{@serverUrl}", #{@doneDelay}, #{@locateMeSeconds}, #{@loginInterval}).open();
