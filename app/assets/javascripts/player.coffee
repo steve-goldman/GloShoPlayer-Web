@@ -19,18 +19,16 @@ class @Player
 
   disconnected: =>
     @viewManager.setViewState ViewManager.NO_SHOW
-    @noSleep.disable()
     @locateMeCountdown.stop()
     this._retryLogin()
 
   unableToConnect: =>
     @viewManager.setViewState ViewManager.NO_SHOW
-    @noSleep.disable()
+    this._relax()
     this._retryLogin()
 
   playerLoggedIn: =>
     @viewManager.setViewState ViewManager.WAITING_TO_START
-    @noSleep.enable()
 
   startingIn: (seconds) =>
     @viewManager.setStartingIn seconds
@@ -75,10 +73,11 @@ class @Player
     @viewManager.setViewState ViewManager.NOT_FOUND
 
   showInfo: (showId) =>
-    if showId.localeCompare(Cookies.get('current_show_id')) == 0
+    if @autoReconnect && showId.localeCompare(Cookies.get('current_show_id')) == 0
       @webSocketWrapper.login()
     else
       @showId = showId
+      this._relax()
       @viewManager.setViewState ViewManager.JOINABLE
 
   playerLoginError: =>
@@ -93,11 +92,13 @@ class @Player
     Cookies.set 'current_show_id', @showId
     @webSocketWrapper.login()
     @donePlayingNotifier.init()
-    @noSleep.enable()
+    @autoReconnect = true
+    this._prepareForShow()
 
   leave: =>
     @webSocketWrapper.close()
     Cookies.remove 'current_show_id'
+    this._relax()
     this.open()
 
   locateMe: =>
@@ -119,3 +120,19 @@ class @Player
 
   _retryLogin: =>
     setTimeout this.open, @loginInterval
+
+  _relax: =>
+    this._exitFullscreen()
+    @noSleep.disable()
+
+  _prepareForShow: =>
+    this._enterFullscreen()
+    @noSleep.enable()
+
+  _enterFullscreen: =>
+    if !screenfull.isFullscreen && screenfull.enabled
+      screenfull.request()
+
+  _exitFullscreen: =>
+    if screenfull.isFullscreen
+      screenfull.exit()
