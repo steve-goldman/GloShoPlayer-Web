@@ -5,8 +5,15 @@ html:fullscreen {
 body {
   background: black;
   color: lightgrey;
-  font-size: 64px;
   text-align: center;
+
+  @media (max-width: 767px) {
+    font-size: 18px;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 64px;
+  }
 }
 
 .fullscreen {
@@ -48,7 +55,15 @@ body {
 }
 
 .btn-xl {
-  padding: 40px 64px;
-  font-size: 72px;
-  border-radius: 16px;
+  @media (max-width: 767px) {
+    padding: 15px 24px;
+    font-size: 27px;
+    border-radius: 6px;
+  }
+
+  @media (min-width: 768px) {
+    padding: 40px 64px;
+    font-size: 72px;
+    border-radius: 16px;
+  }
 }
