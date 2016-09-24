@@ -17,4 +17,5 @@
 //= require socket.io
 //= require nosleep
 //= require js.cookie
+//= require jquery.screenfull
 //= require_tree .
