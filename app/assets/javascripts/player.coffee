@@ -95,6 +95,8 @@ class @Player
 
   leave: =>
     @webSocketWrapper.close()
+    @torchNotesPlayerStarter.close()
+    @locateMeCountdown.stop()
     Cookies.remove 'current_show_id'
     this._relax()
     this.open()

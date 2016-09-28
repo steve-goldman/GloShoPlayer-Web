@@ -1,7 +1,9 @@
 class @TorchNotesPlayerStarter
+  constructor: ->
+    @timers = []
+
   update: (localStartTime, torchNotesPlayer) =>
     this.close()
-
     @torchNotesPlayer = torchNotesPlayer
 
     if localStartTime == 0
@@ -9,22 +11,22 @@ class @TorchNotesPlayerStarter
     else
       now             = Math.round performance.now()
       delay           = localStartTime - now
-      @timer          = setTimeout torchNotesPlayer.start, delay
       @localStartTime = localStartTime
+      this._schedule torchNotesPlayer.start, delay
       for seconds in [1..Math.floor(delay / 1000)]
-        setTimeout this._startingIn, delay - 1000 * seconds
+        this._schedule this._startingIn, delay - 1000 * seconds
 
   setListener: (listener) =>
     @listener = listener
 
   close: =>
-    this._cancelTimer()
+    this._cancelTimers()
     this._stopTorchNotesPlayer
 
-  _cancelTimer: =>
-    if @timer != null
-      clearTimeout @timer
-      @timer = null
+  _cancelTimers: =>
+    for timer in @timers
+      clearTimeout timer
+    @timers = []
 
   _stopTorchNotesPlayer: =>
     if @torchNotesPlayer != null
@@ -33,3 +35,6 @@ class @TorchNotesPlayerStarter
 
   _startingIn: =>
     @listener.startingIn Math.round((@localStartTime - performance.now()) / 1000)
+
+  _schedule: (callback, delay) =>
+    @timers.push setTimeout(callback, delay)
