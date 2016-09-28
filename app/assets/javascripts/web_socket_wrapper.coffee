@@ -1,7 +1,8 @@
 class @WebSocketWrapper
-  constructor: (playerId, serverUrl) ->
-    @playerId  = playerId
-    @serverUrl = serverUrl
+  constructor: (playerId, serverUrl, pingInterval) ->
+    @playerId     = playerId
+    @serverUrl    = serverUrl
+    @pingInterval = pingInterval
 
   setListener: (listener) =>
     @listener = listener
@@ -22,6 +23,7 @@ class @WebSocketWrapper
   close: =>
     console.log 'closing connection'
     @webSocket.close()
+    clearTimeout @pingTimer
 
   sendLocateMe: =>
     new Message('ready-to-locate').send(@webSocket)
@@ -33,11 +35,20 @@ class @WebSocketWrapper
     new Message('torch-series-played').send(@webSocket)
 
   _onOpen: =>
+    @pingTimer       = setTimeout this._sendPing, @pingInterval
+    @lastReceiveTime = performance.now()
     this._getShowInfo()
+
+  _sendPing: =>
+    now = performance.now()
+    if now - @lastReceiveTime > @pingInterval
+      new Message('ping').send(@webSocket)
+    @pingTimer = setTimeout this._sendPing, @pingInterval
 
   _onMessage: (event) =>
     console.log 'rx', event
-    message = JSON.parse event.data
+    @lastReceiveTime = performance.now()
+    message          = JSON.parse event.data
     switch message.messageType
       when 'ping'               then this._ping()
       when 'player-logged-in'   then this._playerLoggedIn()
@@ -55,6 +66,7 @@ class @WebSocketWrapper
       when 'player-login-error' then this._playerLoginError()
   
   _onClose: =>
+    clearTimeout @pingTimer
     if @hasConnected
       @listener.disconnected()
     else

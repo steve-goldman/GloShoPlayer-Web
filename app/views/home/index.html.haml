@@ -20,4 +20,4 @@
 = audio_tag "beep.wav", "beep.mp3", autoplay: false, controls: false, class: :audio, id: :beep
 
 :javascript
-  new PlayerBuilder().build("#{@serverUrl}", #{@doneDelay}, #{@locateMeSeconds}, #{@loginInterval}).open();
+  new PlayerBuilder().build("#{@serverUrl}", #{@doneDelay}, #{@locateMeSeconds}, #{@loginInterval}, #{@pingInterval}).open();
