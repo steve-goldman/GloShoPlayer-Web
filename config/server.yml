@@ -3,9 +3,11 @@ development:
   done_delay:        500
   locate_me_seconds: 5
   login_interval:    5000
+  ping_interval:     20000
 
 production:
   server_url:        wss://glosho-server.herokuapp.com
   done_delay:        500
   locate_me_seconds: 5
   login_interval:    5000
+  ping_interval:     20000

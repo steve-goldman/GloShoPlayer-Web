@@ -24,7 +24,6 @@ class @Player
 
   unableToConnect: =>
     @viewManager.setViewState ViewManager.NO_SHOW
-    this._relax()
     this._retryLogin()
 
   playerLoggedIn: =>
@@ -77,7 +76,6 @@ class @Player
       @webSocketWrapper.login()
     else
       @showId = showId
-      this._relax()
       @viewManager.setViewState ViewManager.JOINABLE
 
   playerLoginError: =>

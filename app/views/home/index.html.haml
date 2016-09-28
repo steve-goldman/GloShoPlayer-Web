@@ -1,5 +1,5 @@
 .lower
-  .info#no-show< Please wait for the show
+  .info#no-show< Trying to connect to the show
   .info#waiting-to-start< Waiting to start
   .info#starting-in< Starting in 10 seconds
   .info#done< Done
@@ -20,4 +20,4 @@
 = audio_tag "beep.wav", "beep.mp3", autoplay: false, controls: false, class: :audio, id: :beep
 
 :javascript
-  new PlayerBuilder().build("#{@serverUrl}", #{@doneDelay}, #{@locateMeSeconds}, #{@loginInterval}).open();
+  new PlayerBuilder().build("#{@serverUrl}", #{@doneDelay}, #{@locateMeSeconds}, #{@loginInterval}, #{@pingInterval}).open();

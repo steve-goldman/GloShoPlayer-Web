@@ -1,7 +1,7 @@
 class @WebSocketWrapperBuilder
-  build: (serverUrl) =>
+  build: (serverUrl, pingInterval) =>
     playerId = this._getPlayerId()
-    return new WebSocketWrapper playerId, serverUrl
+    return new WebSocketWrapper playerId, serverUrl, pingInterval
 
   _getPlayerId: =>
     playerId = Cookies.get 'player_id'

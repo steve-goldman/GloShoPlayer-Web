@@ -1,7 +1,7 @@
 class @PlayerBuilder
-  build: (serverUrl, doneDelay, locateMeSeconds, loginInterval) =>
+  build: (serverUrl, doneDelay, locateMeSeconds, loginInterval, pingInterval) =>
     viewManager             = new ViewManager()
-    webSocketWrapper        = new WebSocketWrapperBuilder().build(serverUrl)
+    webSocketWrapper        = new WebSocketWrapperBuilder().build(serverUrl, pingInterval)
     torchNotesPlayerBuilder = new TorchNotesPlayerBuilder(doneDelay)
     torchNotesPlayerStarter = new TorchNotesPlayerStarter()
     noSleep                 = new NoSleep()
